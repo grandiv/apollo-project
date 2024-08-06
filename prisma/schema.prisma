@@ -61,7 +61,7 @@ model Course {
   id    String @id @default(cuid())
   name  String
   image String
-  units Unit[]
+  units Unit[] // one to many relationship
 }
 
 // unit contains many chapters
