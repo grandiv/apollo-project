@@ -11,12 +11,30 @@ import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import { Plus, Trash } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation"; // navigation is for NextJS app directory, router is for the pages directory
+import SubscriptionAction from "./SubscriptionAction";
 
-type Props = {};
+type Props = { isPro: boolean };
 
 type Input = z.infer<typeof createChaptersSchema>;
 
-function CreateCourseForm({}: Props) {
+function CreateCourseForm({ isPro }: Props) {
+  const router = useRouter();
+  const { toast } = useToast();
+  // useMutation is used to send a POST request to the server and manage the state (loading, error, success)
+  // async function alongside with await will wait for 'Promise' to resolve. It will stop the code execution inside of the 'async' function
+  const { mutate: createChapters, isPending } = useMutation({
+    mutationFn: async ({ title, units }: Input) => {
+      const response = await axios.post("/api/course/createChapters", {
+        title,
+        units,
+      });
+      return response.data;
+    },
+  });
   const form = useForm<Input>({
     resolver: zodResolver(createChaptersSchema),
     defaultValues: {
@@ -26,7 +44,32 @@ function CreateCourseForm({}: Props) {
   });
 
   function onSubmit(data: Input) {
-    console.log(data);
+    if (data.units.some((unit) => unit === "")) {
+      toast({
+        title: "Error",
+        description: "Please fill all the units",
+        variant: "destructive",
+      });
+      return;
+    }
+    createChapters(data, {
+      // course_id is from the response of the server from 'api/course/createChapters/route.ts'
+      onSuccess: ({ course_id }) => {
+        toast({
+          title: "Success",
+          description: "Course created successfully",
+        });
+        router.push(`/create/${course_id}`);
+      },
+      onError: (error) => {
+        console.error(error);
+        toast({
+          title: "Error",
+          description: "Something went wrong",
+          variant: "destructive",
+        });
+      },
+    });
   }
 
   form.watch();
@@ -120,11 +163,17 @@ function CreateCourseForm({}: Props) {
             </div>
             <Separator className="flex-[1]" />
           </div>
-          <Button type="submit" className="w-full mt-6" size="lg">
+          <Button
+            disabled={isPending}
+            type="submit"
+            className="w-full mt-6"
+            size="lg"
+          >
             {`Let's go!`}
           </Button>
         </form>
       </Form>
+      {!isPro && <SubscriptionAction />}
     </div>
   );
 }
