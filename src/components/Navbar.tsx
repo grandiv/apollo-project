@@ -36,7 +36,8 @@ const Navbar = async (props: Props) => {
             {session?.user ? (
               <UserAccountNav user={session.user} />
             ) : (
-              <SignInButton />
+              ""
+              // <SignInButton />
             )}
           </div>
         </div>

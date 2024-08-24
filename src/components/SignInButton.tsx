@@ -9,7 +9,8 @@ type Props = {};
 const SignInButton = (props: Props) => {
   return (
     <Button
-      variant="ghost"
+      variant="outline"
+      className="rounded-3xl w-full h-[3rem] bg-gradient-to-t from-[#62cff4] to-[#2c67f2]"
       onClick={() => {
         signIn("google");
       }}
