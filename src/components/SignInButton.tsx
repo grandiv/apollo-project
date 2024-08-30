@@ -10,7 +10,7 @@ const SignInButton = (props: Props) => {
   return (
     <Button
       variant="outline"
-      className="rounded-3xl w-full h-[3rem] bg-gradient-to-t from-[#62cff4] to-[#2c67f2]"
+      className="rounded-3xl w-1/2 h-[3rem] border-none bg-gradient-to-br hover:bg-gradient-to-tl from-[#ffad5c] to-[#e6220c]"
       onClick={() => {
         signIn("google");
       }}
