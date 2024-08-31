@@ -3,10 +3,9 @@ import React from "react";
 import SignInButton from "@/components/SignInButton";
 import { getAuthSession } from "@/lib/auth";
 import Link from "next/link";
-import CardSection from "@/components/CardSection";
 import Image from "next/image";
 import { GalleryVerticalEnd, Rocket } from "lucide-react";
-import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+import ParallaxBg from "@/components/ParallaxBg";
 
 type Props = {};
 
@@ -15,20 +14,20 @@ const Home = async (props: Props) => {
   return (
     <div className="relative flex flex-col">
       <Image
-        src="/bg.jpg"
-        alt="bg"
-        width={1920}
-        height={1080}
-        className="absolute z-[-1]"
+        src="/rocket.png"
+        alt="rocket"
+        width={300}
+        height={300}
+        className="absolute z-[20] ml-9 rotate-[70deg]"
       />
       <div className="w-full h-screen">
         <div className="flex flex-col max-w-3xl mx-4 my-10 md:mx-[10rem] md:my-[15rem]">
-          <div>
+          <div className="z-[10]">
             <h1 className="text-8xl font-bold text-start">
               GROW YOUR TALENT WITH APOLLO
             </h1>
           </div>
-          <div className="py-4">
+          <div className="py-4 z-[10]">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quaerat
             eos expedita deleniti ipsa quae quidem omnis reiciendis
             voluptatibus.
@@ -40,7 +39,7 @@ const Home = async (props: Props) => {
                   className={buttonVariants({
                     variant: "outline",
                     className:
-                      "rounded-[1.5rem] w-[15vw] bg-transparent border border-white hover:backdrop-blur-[20px] hover:bg-inherit backdrop-blur-[10px]",
+                      "rounded-[1.5rem] z-[10] w-[15vw] bg-transparent border border-white hover:backdrop-blur-[20px] hover:bg-inherit backdrop-blur-[10px]",
                     size: "lg",
                   })}
                   href="/gallery"
@@ -52,7 +51,7 @@ const Home = async (props: Props) => {
                   className={buttonVariants({
                     variant: "secondary",
                     className:
-                      "rounded-[1.5rem] w-[15vw] bg-gradient-to-br from-[#ffad5c] to-[#e6220c] hover:bg-gradient-to-tr",
+                      "rounded-[1.5rem] z-[10] w-[15vw] bg-gradient-to-br from-[#ffad5c] to-[#e6220c] hover:bg-gradient-to-tr",
                     size: "lg",
                   })}
                   href="/create"
@@ -67,7 +66,7 @@ const Home = async (props: Props) => {
           </div>
         </div>
       </div>
-      <CardSection />
+      <ParallaxBg />
     </div>
   );
 };

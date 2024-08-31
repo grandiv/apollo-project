@@ -12,7 +12,7 @@ type Props = {};
 
 const CardSection = (props: Props) => {
   return (
-    <div className="bg-[#ebeff7] pb-9 pt-9 items-center flex relative flex-col">
+    <div className="bg-[#ebeff7] pb-9 pt-9 h-screen items-center flex relative flex-col">
       <h1 className="text-6xl font-bold text-black">Built with FPS</h1>
       <div className="p-9 flex flex-col md:flex-row w-full justify-evenly">
         <Card className="w-[350px] text-black bg-[#f3f3f7] drop-shadow-lg border-none hover:-translate-y-2">
