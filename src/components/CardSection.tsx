@@ -12,10 +12,10 @@ type Props = {};
 
 const CardSection = (props: Props) => {
   return (
-    <div className="bg-[#ebeff7] pb-9 pt-9 h-screen items-center flex relative flex-col">
-      <h1 className="text-6xl font-bold text-black">Built with FPS</h1>
+    <div className="bg-[#ebeff7] pb-9 pt-24 h-screen items-center flex relative flex-col">
+      <h1 className="text-6xl font-bold text-[#213178]">Built with FPS</h1>
       <div className="p-9 flex flex-col md:flex-row w-full justify-evenly">
-        <Card className="w-[350px] text-black bg-[#f3f3f7] drop-shadow-lg border-none hover:-translate-y-2">
+        <Card className="w-[350px] text-[#213178] bg-[#f3f3f7] drop-shadow-lg border-none hover:-translate-y-2">
           <div className="w-full flex justify-center pt-8">
             <Rocket
               width={100}
@@ -34,7 +34,7 @@ const CardSection = (props: Props) => {
             </CardDescription>
           </CardHeader>
         </Card>
-        <Card className="w-[350px] text-black bg-[#f3f3f7] drop-shadow-lg border-none hover:-translate-y-2">
+        <Card className="w-[350px] text-[#213178] bg-[#f3f3f7] drop-shadow-lg border-none hover:-translate-y-2">
           <div className="w-full flex justify-center pt-8">
             <Smile
               width={100}
@@ -54,7 +54,7 @@ const CardSection = (props: Props) => {
             </CardDescription>
           </CardHeader>
         </Card>
-        <Card className="w-[350px] text-black bg-[#f3f3f7] drop-shadow-lg border-none hover:-translate-y-2">
+        <Card className="w-[350px] text-[#213178] bg-[#f3f3f7] drop-shadow-lg border-none hover:-translate-y-2">
           <div className="w-full flex justify-center pt-8">
             <LayoutPanelTop
               width={100}

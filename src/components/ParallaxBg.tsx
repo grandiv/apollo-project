@@ -1,3 +1,4 @@
+// It doesn't work lol, but I'm keeping it anyway
 "use client";
 import React from "react";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";

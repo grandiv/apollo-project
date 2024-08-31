@@ -28,7 +28,7 @@ const SearchGallery: React.FC<Props> = ({ courses }) => {
         <Input
           type="search"
           placeholder="Search"
-          className="w-full max-w-sm border-0 h-8 font-semibold"
+          className="w-full max-w-sm h-8 font-semibold"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />

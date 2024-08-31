@@ -5,7 +5,7 @@ import { getAuthSession } from "@/lib/auth";
 import Link from "next/link";
 import Image from "next/image";
 import { GalleryVerticalEnd, Rocket } from "lucide-react";
-import ParallaxBg from "@/components/ParallaxBg";
+import CardSection from "@/components/CardSection";
 
 type Props = {};
 
@@ -16,12 +16,19 @@ const Home = async (props: Props) => {
       <Image
         src="/rocket.png"
         alt="rocket"
-        width={300}
-        height={300}
-        className="absolute z-[20] ml-9 rotate-[70deg]"
+        width={150}
+        height={150}
+        className="absolute z-[20] ml-9 mt-9 rotate-[70deg]"
+      />
+      <Image
+        src="/bg.jpg"
+        alt="bg"
+        width={1920}
+        height={1080}
+        className="absolute z-[-1]"
       />
       <div className="w-full h-screen">
-        <div className="flex flex-col max-w-3xl mx-4 my-10 md:mx-[10rem] md:my-[15rem]">
+        <div className="flex flex-col max-w-3xl mx-4 my-10 md:mx-[7.8rem] md:my-[10rem]">
           <div className="z-[10]">
             <h1 className="text-8xl font-bold text-start">
               GROW YOUR TALENT WITH APOLLO
@@ -66,7 +73,7 @@ const Home = async (props: Props) => {
           </div>
         </div>
       </div>
-      <ParallaxBg />
+      <CardSection />
     </div>
   );
 };

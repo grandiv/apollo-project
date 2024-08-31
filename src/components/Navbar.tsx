@@ -11,13 +11,13 @@ const Navbar = async (props: Props) => {
   const session = await getAuthSession();
   return (
     <nav className="fixed inset-x-0 top-0 bg-opacity-0 z-[10] h-fit py-3">
-      <div className="flex items-center justify-center h-full gap-2 px-8 mx-auto sm:justify-between max-w-7xl">
+      <div className="flex items-center justify-center h-full gap-2 mx-auto sm:justify-between max-w-7xl">
         <Link href="/" className="items-center hidden gap-2 sm:flex">
           <p className="rounded-lg px-2 py-1 text-xl font-bold transition-all hover:-translate-y-[2px] md:block dark:border-white">
             APOLLO
           </p>
         </Link>
-        <div className="flex items-center">
+        <div className="flex items-center bg-[#212f6d] py-[0.15rem] px-4 rounded-[2rem]">
           {session?.user && (
             <>
               <Link href="/gallery" className="mr-12">
