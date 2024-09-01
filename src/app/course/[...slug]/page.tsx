@@ -55,8 +55,8 @@ const CoursePage = async ({ params: { slug } }: Props) => {
   const prevChapter = unit.chapters[chapterIndex - 1];
 
   return (
-    <div>
-      <CourseSidebar course={course} currentChapterId={chapter.id} />;
+    <div className="pt-16">
+      <CourseSidebar course={course} currentChapterId={chapter.id} />
       <div>
         <div className="ml-[400px] px-8">
           <div className="flex">

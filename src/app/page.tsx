@@ -3,50 +3,77 @@ import React from "react";
 import SignInButton from "@/components/SignInButton";
 import { getAuthSession } from "@/lib/auth";
 import Link from "next/link";
+import Image from "next/image";
+import { GalleryVerticalEnd, Rocket } from "lucide-react";
+import CardSection from "@/components/CardSection";
 
 type Props = {};
 
 const Home = async (props: Props) => {
   const session = await getAuthSession();
   return (
-    <div className="flex flex-col max-w-xl mx-[10rem] my-[10rem]">
-      <div className="">
-        <h1 className="text-7xl font-bold text-start">
-          GROW YOUR TALENT WITH APOLLO
-        </h1>
-      </div>
-      <div className="py-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quaerat eos
-        expedita deleniti ipsa quae quidem omnis reiciendis voluptatibus.
-      </div>
-      <div className="flex flex-row">
-        {session?.user ? (
-          <div className="flex w-full space-x-[15rem] justify-center">
-            <Link
-              className={buttonVariants({
-                variant: "outline",
-                className: "rounded-3xl w-[10vw]",
-                size: "lg",
-              })}
-              href="/gallery"
-            >
-              Gallery
-            </Link>
-            <Link
-              className={buttonVariants({
-                variant: "secondary",
-                className: "rounded-3xl w-[10vw]",
-                size: "lg",
-              })}
-              href="/create"
-            >
-              Start
-            </Link>
+    <div className="relative flex flex-col">
+      <Image
+        src="/rocket.png"
+        alt="rocket"
+        width={150}
+        height={150}
+        className="absolute z-[20] ml-9 mt-9 rotate-[70deg]"
+      />
+      <Image
+        src="/bg.jpg"
+        alt="bg"
+        width={1920}
+        height={1080}
+        className="absolute z-[-1]"
+      />
+      <div className="w-full h-screen">
+        <div className="flex flex-col max-w-3xl mx-4 my-10 md:mx-[7.8rem] md:my-[10rem]">
+          <div className="z-[10]">
+            <h1 className="text-8xl font-bold text-start">
+              GROW YOUR TALENT WITH APOLLO
+            </h1>
           </div>
-        ) : (
-          <SignInButton />
-        )}
+          <div className="py-4 z-[10]">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut quaerat
+            eos expedita deleniti ipsa quae quidem omnis reiciendis
+            voluptatibus.
+          </div>
+          <div className="flex flex-row">
+            {session?.user ? (
+              <div className="flex w-full space-x-[5rem] justify-center">
+                <Link
+                  className={buttonVariants({
+                    variant: "outline",
+                    className:
+                      "rounded-[1.5rem] z-[10] w-[15vw] bg-transparent border border-white hover:backdrop-blur-[20px] hover:bg-inherit backdrop-blur-[10px]",
+                    size: "lg",
+                  })}
+                  href="/gallery"
+                >
+                  Gallery
+                  <GalleryVerticalEnd className="ml-2" />
+                </Link>
+                <Link
+                  className={buttonVariants({
+                    variant: "secondary",
+                    className:
+                      "rounded-[1.5rem] z-[10] w-[15vw] bg-gradient-to-br from-[#ffad5c] to-[#e6220c] hover:bg-gradient-to-tr",
+                    size: "lg",
+                  })}
+                  href="/create"
+                >
+                  Start
+                  <Rocket className="ml-2" />
+                </Link>
+              </div>
+            ) : (
+              <SignInButton />
+            )}
+          </div>
+        </div>
       </div>
+      <CardSection />
     </div>
   );
 };

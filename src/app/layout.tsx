@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(lexend.className, "antialiased min-h-screen pt-16")}>
+      <body className={cn(lexend.className, "antialiased min-h-screen")}>
         <Provider>
           <Navbar />
           {children}

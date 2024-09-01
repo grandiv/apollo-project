@@ -38,8 +38,8 @@ export async function POST(req: Request, res: Response) {
     transcript = transcript.split(" ").slice(0, maxLength).join(" ");
 
     const { summary }: { summary: string } = await strict_output(
-      "You are an AI capable of summarizing a YouTube transcript",
-      "Summarize in 250 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about.\n" +
+      "You are an AI capable of summarizing a YouTube transcript. Make sure you return the summary, you can't return blank.",
+      "Summarize in 150 words or less and do not talk of the sponsors or anything unrelated to the main topic, also do not introduce what the summary is about.\n" +
         transcript,
       { summary: "summary of the transcript" }
     );

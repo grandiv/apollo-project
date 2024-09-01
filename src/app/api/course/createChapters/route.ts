@@ -34,20 +34,20 @@ export async function POST(req: Request, res: Response) {
     }[];
 
     let output_units: outputUnits = await strict_output(
-      "You are an AI capable of curating course content, coming up with relevant chapter titles, and finding relevant YouTube videos for each chapter",
+      "You are an AI capable of curating course content, consists of maximum 5 units and coming up with relevant chapter titles, and finding relevant YouTube videos for each chapter",
       new Array(units.length).fill(
-        `It is your job to create a course about ${title}. The user has requested to create chapters for each of the units. Then, for each chapter, provide a detailed YouTube search query that can be used to find an informative educational video for each chapter. Each query should give an educational informative course in YouTube.`
+        `It is your job to create a course about ${title}. The maximum amount of units is 5. The user has requested to create chapters for each of the units, if you find more than 5 relevant chapters, choose the most relevant ones with maximum of 5 chapters per unit. Then, for each chapter, provide a detailed YouTube search query that can be used to find an informative educational video for each chapter. Each query should give an educational informative course in YouTube.`
       ),
       {
         title: "title of the unit",
         chapters:
-          "an array of chapters, each chapter should have a youtube_search_query and a chapter_title key in the JSON object",
+          "an array of chapters with maximum of 5, each chapter should have a youtube_search_query and a chapter_title key in the JSON object",
       }
     );
 
     const imageSearchTerm = await strict_output(
       "You are an AI capable of finding the most relevant image for a course",
-      `Please provide a good image search term for the title of a course about ${title}. This search term will be fed into the unsplash API, so make sure it is a good search term that will return good results`,
+      `Please provide a good image search term for the title of a course about ${title}. This search term will be fed into the unsplash API, so make sure it is a good search term that will return good results. Make sure the picture you are searching is relevant to the category of the course.`,
       {
         image_search_term: "a good search form for the title of the course",
       }
