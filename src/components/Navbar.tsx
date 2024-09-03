@@ -17,7 +17,7 @@ const Navbar = async (props: Props) => {
             APOLLO
           </p>
         </Link>
-        {/*bg-[#212f6d]*/}
+        {/*bg-[#212f6d] background*/}
         <div className="flex items-center py-[0.15rem] px-4 rounded-[2rem]">
           {session?.user && (
             <>
