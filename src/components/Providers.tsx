@@ -11,15 +11,17 @@ export function Provider({ children, ...props }: ThemeProviderProps) {
   return (
     // Query Client Provider is used to cache the result from previous endpoint hitting (efficiency, bandwidth saving)
     <QueryClientProvider client={queryClient}>
-      <NextThemesProvider
+      {/* <NextThemesProvider
         attribute="class"
         defaultTheme="system"
         enableSystem
         {...props}
-      >
-        {/* SessionProvider is used to get the user data from the session. Used in SubscriptionAction */}
-        <SessionProvider>{children}</SessionProvider>
-      </NextThemesProvider>
+      > */}
+
+      {/* SessionProvider is used to get the user data from the session. Used in SubscriptionAction */}
+      <SessionProvider>{children}</SessionProvider>
+
+      {/* </NextThemesProvider> */}
     </QueryClientProvider>
   );
 }

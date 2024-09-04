@@ -1,4 +1,9 @@
-import { VertexAI, GenerateContentResult } from "@google-cloud/vertexai";
+import {
+  VertexAI,
+  GenerateContentResult,
+  HarmCategory,
+  HarmBlockThreshold,
+} from "@google-cloud/vertexai";
 
 interface OutputFormat {
   [key: string]: string | string[] | OutputFormat;
@@ -10,8 +15,8 @@ export async function strict_output(
   output_format: OutputFormat,
   default_category: string = "",
   output_value_only: boolean = false,
-  model: string = "gemini-1.5-flash-001",
-  temperature: number = 1,
+  model: string = "gemini-1.5-pro-001",
+  temperature: number = 0.7,
   num_tries: number = 3,
   verbose: boolean = false
 ) {
@@ -19,7 +24,31 @@ export async function strict_output(
     project: process.env.GOOGLE_CLOUD_PROJECT,
     location: "us-central1",
   });
-  const generativeModel = vertexAI.getGenerativeModel({ model: model });
+  const generativeModel = vertexAI.getGenerativeModel({
+    model: model,
+    generationConfig: {
+      temperature: temperature,
+      topP: 0.45,
+    },
+    safetySettings: [
+      {
+        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+      },
+    ],
+  });
 
   const list_input: boolean = Array.isArray(user_prompt);
   const dynamic_elements: boolean = /<.*?>/.test(JSON.stringify(output_format));
