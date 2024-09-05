@@ -26,12 +26,9 @@ const ChapterCard = React.forwardRef<ChapterCardHandler, Props>(
     const [success, setSuccess] = React.useState<boolean | null>(null);
     const { mutate: getChapterInfo, isPending } = useMutation({
       mutationFn: async () => {
-        const response = await axios.post(
-          "https://apollo.apollograndiv.software/api/chapter/getInfo",
-          {
-            chapterId: chapter.id,
-          }
-        );
+        const response = await axios.post("/api/chapter/getInfo", {
+          chapterId: chapter.id,
+        });
         return response.data;
       },
     });

@@ -28,13 +28,10 @@ function CreateCourseForm({ isPro }: Props) {
   // async function alongside with await will wait for 'Promise' to resolve. It will stop the code execution inside of the 'async' function
   const { mutate: createChapters, isPending } = useMutation({
     mutationFn: async ({ title, units }: Input) => {
-      const response = await axios.post(
-        "https://apollo.apollograndiv.software/api/course/createChapters",
-        {
-          title,
-          units,
-        }
-      );
+      const response = await axios.post("/api/course/createChapters", {
+        title,
+        units,
+      });
       return response.data;
     },
   });
