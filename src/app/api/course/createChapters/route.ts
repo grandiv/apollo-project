@@ -3,7 +3,7 @@
 import { NextResponse } from "next/server";
 import { createChaptersSchema } from "@/validators/course";
 import { ZodError } from "zod";
-import { strict_output } from "@/lib/geminiv2";
+import { strict_output } from "@/lib/gemini";
 import { getUnsplashImage } from "@/lib/unsplash";
 import { prisma } from "@/lib/db";
 import { getAuthSession } from "@/lib/auth";
@@ -14,14 +14,12 @@ export async function POST(req: Request, res: Response) {
     const session = await getAuthSession();
     if (!session?.user) {
       return new NextResponse("Unauthorized", { status: 401 });
-      console.log("Unauthorized");
     }
 
     // If they are a pro member, this section will be skipped
     const isPro = await checkSubscription();
     if (session.user.credits <= 0 && !isPro) {
       return new NextResponse("No Credits Left", { status: 402 });
-      console.log("No Credits Left");
     }
 
     const body = await req.json();
@@ -82,7 +80,6 @@ export async function POST(req: Request, res: Response) {
             youtubeSearchQuery: chapter.youtube_search_query,
             unitId: prismaUnit.id,
           };
-          console.log("created successfully");
         }),
       });
     }
@@ -101,7 +98,6 @@ export async function POST(req: Request, res: Response) {
 
     // redirect to the course page
     return NextResponse.json({ course_id: course.id });
-    console.log("cuma dapet slug");
   } catch (error) {
     console.error("Error in POST /api/course/createChapters:", error);
 

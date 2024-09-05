@@ -8,7 +8,7 @@ import {
   getTranscript,
   searchYoutube,
 } from "@/lib/youtube";
-import { strict_output } from "@/lib/geminiv2";
+import { strict_output } from "@/lib/gemini";
 
 const bodyParser = z.object({
   chapterId: z.string(),
