@@ -1,13 +1,6 @@
-
 # APOLLO Project
 
-This is my first Full-Stack Development project I did in Next.js framework. A Software-as-a-Service web application integrated with Artificial Intelligence to generate YouTube videos for talent growth purposes. The videos are curated with Gemini 1.5 Pro from Vertex AI through YouTube API. User has to sign in with their Google account then insert the course title and its corresponding units. Then, they will directed to the course page where they can see the chapters, its YouTube videos, its summaries, and a set of questions to test the user's understanding of a chapter. 
-
-
-## Author
-
-- [@grandiv](https://github.com/grandiv) inspired by [@Elliott-Chong](https://github.com/Elliott-Chong)
-
+This is my first Full-Stack Development project I did in Next.js framework. A Software-as-a-Service web application integrated with Artificial Intelligence to generate YouTube videos for talent growth purposes. The videos are curated with Gemini from Vertex AI through YouTube API. User has to sign in with their Google account then insert the course title and its corresponding units. Then, they will directed to the course page where they can see the chapters, its YouTube videos, its summaries, and a set of questions to test the user's understanding of a chapter. 
 
 ## Tech Stack
 
@@ -25,7 +18,7 @@ This is my first Full-Stack Development project I did in Next.js framework. A So
 
 **Containerization:** Docker
 
-**AI Model:** Gemini-1.5-Pro-001
+**AI Model:** Gemini
 
 **Payments:** Stripe
 
