@@ -7,7 +7,7 @@ export async function searchYoutube(searchQuery: string) {
   // hello world -> hello+world
   searchQuery = encodeURIComponent(searchQuery);
   const { data } = await axios.get(
-    `https://www.googleapis.com/youtube/v3/search?key=${process.env.YOUTUBE_API_KEY}&q=${searchQuery}&videoDuration=medium&videoEmbeddable=true&type=video&maxResults=5`
+    `https://www.googleapis.com/youtube/v3/search?key=${process.env.YOUTUBE_API_KEY}&q=${searchQuery}&videoDuration=medium&videoEmbeddable=true&type=video&maxResults=5&videoCaption=closedCaption`
   );
   if (!data) {
     console.log("YouTube failed");
@@ -48,7 +48,7 @@ export async function getQuestionsFromTranscript(
     option3: string;
   };
   const questions: Question[] = await strict_output(
-    "You are a helpful AI that is able to generate MCQ questions and answers, the length of each answer should not be more than 15 words. You must return the response before continuing, you cannot return blank.",
+    "You are a helpful AI that is able to generate MCQ questions and answers, the length of each answer should not be more than 15 words and it must not be empty. If you can't generate any, return the reason why you can't generate. You must return the response before continuing, you cannot return blank.",
     new Array(5).fill(
       `You are to generate a random hard MCQ question about ${course_title} with context of the following transcript: ${transcript}`
     ),

@@ -66,7 +66,6 @@ const ChapterCard = React.forwardRef<ChapterCardHandler, Props>(
             addChapterIdToSet();
           },
           onError: (error) => {
-            console.log(error);
             setSuccess(false);
             toast({
               title: "Error",
