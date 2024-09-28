@@ -10,8 +10,8 @@ generator client {
 
 datasource db {
   provider      = "postgresql"
-  url           = env("DATABASE_URL")
-  directUrl     = env("DIRECT_URL")
+  url           = env("DATABASE_URL_DEV")
+  directUrl     = env("DIRECT_URL_DEV")
   relationMode  = "prisma"
 }
 
@@ -54,6 +54,7 @@ model User {
 
   accounts Account[]
   sessions Session[]
+  courses Course[]
 }
 
 // course contains many units
@@ -61,7 +62,10 @@ model Course {
   id    String @id @default(cuid())
   name  String
   image String
+  userId String
   units Unit[] // one to many relationship
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
 }
 
 // unit contains many chapters
