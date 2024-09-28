@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
-import { Plus, Trash } from "lucide-react";
+import { Plus, Rocket, Trash } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -169,7 +169,8 @@ function CreateCourseForm({ isPro }: Props) {
             className="w-full mt-6"
             size="lg"
           >
-            {`Let's go!`}
+            {`Fire up!`}
+            <Rocket className="ml-2" />
           </Button>
         </form>
       </Form>

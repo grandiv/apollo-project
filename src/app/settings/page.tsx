@@ -14,7 +14,7 @@ const SettingsPage = async (props: Props) => {
           You are a pro member.
         </p>
       ) : (
-        <p className="text-xl text-secondary-foreground/60">
+        <p className="text-xl py-4 text-secondary-foreground/60">
           You are a free member.
         </p>
       )}

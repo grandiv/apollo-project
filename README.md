@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# APOLLO Project
 
-## Getting Started
+This is my first Full-Stack Development project I did in Next.js framework. A Software-as-a-Service web application integrated with Artificial Intelligence to generate YouTube videos for talent growth purposes. The videos are curated with Gemini from Vertex AI through YouTube API. User has to sign in with their Google account then insert the course title and its corresponding units. Then, they will directed to the course page where they can see the chapters, its YouTube videos, its summaries, and a set of questions to test the user's understanding of a chapter. 
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Framework:** Next.js
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Front-end:** React, ShadCN, TailwindCSS
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Back-end:** Node, Express
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+**API used:** Vertex AI API, YouTube API, Unsplash API
 
-## Learn More
+**Authentication:** Google Authentication
 
-To learn more about Next.js, take a look at the following resources:
+**Database:** Supabase PostgreSQL with Prisma as an ORM
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Containerization:** Docker
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**AI Model:** Gemini
 
-## Deploy on Vercel
+**Payments:** Stripe
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Deployment:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+* **VPS (Ubuntu Virtual Machine):** DigitalOcean Droplet 
+* **Web Sever:** Nginx
+* **SSL:** Enabled through Certbot using Let's Encrypt
+
+**CI/CD:** GitHub Actions
+
+**Domain Management:** [Name.com](https://www.name.com/)
+
+## Screenshots
+
+[![Logged-In Landing Page](https://i.postimg.cc/VkgDbvhZ/Screenshot-2024-09-04-221514.png)](https://postimg.cc/zyLnsz8T)
+
+[![Example Course Chapter](https://i.postimg.cc/FKKGbm5r/Screenshot-2024-09-04-221655.png)](https://postimg.cc/fV6xZGRp)
+## Future Development
+
+* Add a system to track progress
+* Refine the AI model for more personalized and relevant course videos based on user's learning progress profile (e.g. user tends to spend more time on videos with illustrations and visual)
+* Add an AI prediction to suggest the best next course for user based on user's learning curve
+* Add more interactivity and appealing user interface yet still maintaining maximum user experience
+
