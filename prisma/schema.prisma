@@ -48,7 +48,7 @@ model Session {
 model Team {
   id      String   @id @default(cuid())
   name    String
-  users   User[] // one to many relationship
+  users   UserTeam[] // one to many relationship
   courses Course[] // one to many relationship
 }
 
@@ -64,14 +64,21 @@ model User {
   accounts Account[]
   sessions Session[]
   // courses  Course[]
-  team     Team?     @relation(fields: [teamId], references: [id])
-  courses  Course[]  @relation("UserCourses")
-
+  teams         UserTeam[] 
   Course Course[]
 
   @@index([teamId])
 }
 
+// join table for many to many relationship between User and Team
+model UserTeam {
+  userId String
+  teamId String
+  user   User @relation(fields: [userId], references: [id])
+  team   Team @relation(fields: [teamId], references: [id])
+  @@id([userId, teamId])
+  @@index([teamId])
+}
 // course contains many units
 model Course {
   id     String  @id @default(cuid())
@@ -85,7 +92,6 @@ model Course {
 
   @@index([userId])
   @@index([teamId])
-  User User[] @relation("UserCourses")
 }
 
 // unit contains many chapters

@@ -30,6 +30,9 @@ const Navbar = async (props: Props) => {
           <div className="flex items-center py-[0.15rem] px-4 rounded-[2rem]">
             {session?.user && (
               <>
+                <Link href="/teams" className="mr-12 hidden md:flex">
+                  Teams
+                </Link>
                 <Link href="/gallery" className="mr-12 hidden md:flex">
                   Gallery
                 </Link>
