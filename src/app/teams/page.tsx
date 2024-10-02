@@ -1,28 +1,14 @@
 import { getAuthSession } from "@/lib/auth";
-import { checkSubscription } from "@/lib/subscription";
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { createTeamsSchema } from "@/validators/teams";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/components/ui/form";
-import axios from "axios";
 import { prisma } from "@/lib/db";
-import { useToast } from "@/components/ui/use-toast";
 import TeamsForms from "@/components/teams/TeamsForms";
 
 type Props = {};
 
-type Input = z.infer<typeof createTeamsSchema>;
 
 const TeamsPage = async (props: Props) => {
   const session = await getAuthSession();
-  let toastActive = false;
-  let title = "";
-  let description = "";
   if (!session?.user) {
     return redirect("/");
   }
