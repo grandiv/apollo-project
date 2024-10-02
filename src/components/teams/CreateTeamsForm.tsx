@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useToast } from "../ui/use-toast";
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 type Input = {
   name: string;
 };
 
 const CreateTeamsForms = () => {
+  const router = useRouter();
   const { toast } = useToast();
   const [teamName, setTeamName] = useState<string>("");
 
@@ -29,13 +30,13 @@ const CreateTeamsForms = () => {
         description: "Team created successfully",
         variant: "default",
       });
-
       console.log("Team created:", response.data);
+      router.push("/teams");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast({
           title: "Error",
-          description: "Error creating team",
+          description: error.response?.data,
           variant: "destructive",
         });
         console.error("Error creating team:", error.response?.data.error);
@@ -68,6 +69,7 @@ const CreateTeamsForms = () => {
         action=""
         className="w-full flex flex-col gap-y-5 justify-center items-center"
         onSubmit={(e) => {
+          e.preventDefault();
           handleSubmit(teamName);
         }}
       >

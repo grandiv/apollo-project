@@ -10,7 +10,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
         }
         
         //get all teams from 
-
         const teams = await prisma.team.findMany({
             include: {
             users: true,
