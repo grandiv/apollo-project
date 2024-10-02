@@ -12,7 +12,6 @@ export async function GET(req: NextRequest, res: NextApiRequest) {
     //get query params
     const url = new URL(req.url);
     const referalCode = url.searchParams.get("referalCode");
-    console.log("REFERAL: ", referalCode);
     try {
       const team = await prisma.team.findFirst({
         where: {

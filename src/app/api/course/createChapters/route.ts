@@ -23,7 +23,7 @@ export async function POST(req: Request, res: Response) {
     }
 
     const body = await req.json();
-    const { title, units } = createChaptersSchema.parse(body);
+    const { title, units, teamId } = createChaptersSchema.parse(body);
 
     type outputUnits = {
       title: string;
@@ -63,6 +63,7 @@ export async function POST(req: Request, res: Response) {
         name: title,
         image: course_image,
         userId: session.user.id,
+        teamId: teamId ? teamId : undefined,
       },
     });
 
@@ -93,6 +94,19 @@ export async function POST(req: Request, res: Response) {
       data: {
         credits: {
           decrement: 1,
+        },
+      },
+    });
+
+    await prisma.team.update({
+      where: {
+        id: teamId,
+      },
+      data: {
+        courses: {
+          connect: {
+            id: course.id,
+          },
         },
       },
     });

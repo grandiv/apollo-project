@@ -1,29 +1,50 @@
-"use client";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import CreateCourseTeams from "@/components/teams/CreateCourseTeams";
+import { redirect } from "next/navigation";
+import { getAuthSession } from "@/lib/auth";
+import { prisma } from "@/lib/db";
+import { headers } from "next/headers";
+import SearchGallery from "@/components/SearchGallery";
 
-export default function TeamsPage() {
-  const router = useRouter();
-  const { id } = useParams();
-  const teams = axios
-    .get(`/api/teams/getTeamsTitle/`, {
-        params: {
-            referalCode: id[0],
-        }
-    })
-    .then((res) => {
-        setTeamTitle(res.data.name);
-    })
-    .catch((error) => {});
-  const [teamTitle, setTeamTitle] = useState<string>();
+const TeamsPage = async () => {
 
+  const headersList = headers()
+  const pathname = headersList.get('x-pathname');
+  const id = pathname?.split("/")[2];
+  const session = await getAuthSession();
+  if (!session?.user) {
+    return redirect("/");
+  }
+  const team = await prisma.team.findFirst({
+    where: {
+      referalCode: id as string,
+    },
+  });
+  const courses = await prisma.course.findMany({
+    where: {
+      teamId: team?.id,
+    },
+    include: {
+      units: {
+        include: {
+          chapters: true,
+        },
+      },
+    },
+  });
   return (
     <div className="w-screen h-screen flex items-center justify-center">
-      <div className="w-[70%] h-[70%] flex flex-col justify-start items-center">
-        <span className="w-full">{teamTitle ? teamTitle : "Teams not found"}</span>
+      <div className="w-[70%] h-[70%] flex flex-col justify-start items-center duration-500">
+        <span className="w-full">
+          {team?.name ? team.name : "Teams not found"}
+        </span>
+        <SearchGallery courses={courses} type="team" id={team?.id} />
+        
       </div>
     </div>
   );
 }
+
+export default TeamsPage;
