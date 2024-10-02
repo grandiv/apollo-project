@@ -68,7 +68,6 @@ const CreateTeamsForms = () => {
         action=""
         className="w-full flex flex-col gap-y-5 justify-center items-center"
         onSubmit={(e) => {
-          e.preventDefault();
           handleSubmit(teamName);
         }}
       >

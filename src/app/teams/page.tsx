@@ -9,6 +9,8 @@ import { z } from "zod";
 import { createTeamsSchema } from "@/validators/teams";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
+import axios from "axios";
+import { prisma } from "@/lib/db";
 
 type Props = {};
 
@@ -19,8 +21,15 @@ const TeamsPage = async (props: Props) => {
   if (!session?.user) {
     return redirect("/");
   }
-  const isPro = await checkSubscription();
-
+  const teams = await prisma.team.findMany({
+    where: {
+      users: {
+        some: {
+          id: session?.user.id,
+        },
+      },
+    },
+  });
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <div className="w-[70%] h-[70%] flex flex-col justify-start gap-y-5">
@@ -45,7 +54,12 @@ const TeamsPage = async (props: Props) => {
             </Button>
           </form>
         </div>
-        <div className="w-full h-full"></div>
+        <div className="w-full h-full flex flex-col gap-3">{teams.map((item, idx) => (
+          <Link href={`/teams/${item.referalCode}`} key={idx} className="w-full p-1 border-[.5px] border-white flex justify-between">
+            <p>{item.name}</p>
+            <p>#{item.referalCode}</p>
+          </Link>
+        ))}</div>
       </div>
     </div>
   );
