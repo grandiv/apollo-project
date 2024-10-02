@@ -20,6 +20,22 @@ export async function searchYoutube(searchQuery: string) {
   return data.items[0].id.videoId;
 }
 
+export async function getYoutubeDescription(videoId: string) {
+  try {
+    const { data } = await axios.get(
+      `https://www.googleapis.com/youtube/v3/videos?key=${process.env.YOUTUBE_API_KEY}&part=snippet&id=${videoId}`
+    );
+    if (!data || !data.items || data.items.length === 0) {
+      console.log("Failed to retrieve video description");
+      return "No description available";
+    }
+    return data.items[0].snippet.description;
+  } catch (error) {
+    console.log("Error fetching video description:", error);
+    return "No description available";
+  }
+}
+
 // return the full transcript of the video ID
 export async function getTranscript(videoId: string) {
   try {
@@ -32,7 +48,8 @@ export async function getTranscript(videoId: string) {
     }
     return transcript.replaceAll("\n", " ");
   } catch (error) {
-    return "";
+    console.log("Failed to fetch transcript, fetching description instead.");
+    return await getYoutubeDescription(videoId);
   }
 }
 
