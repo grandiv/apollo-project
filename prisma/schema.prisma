@@ -48,6 +48,7 @@ model Session {
 model Team {
   id      String   @id @default(cuid())
   name    String
+  referalCode String @unique
   users   UserTeam[] // one to many relationship
   courses Course[] // one to many relationship
 }
