@@ -2,41 +2,58 @@ import axios from "axios";
 import { YoutubeTranscript } from "youtube-transcript";
 import { strict_output } from "@/lib/gemini";
 
-// searchYoutube function will return the video ID based on the relevant YouTube query
-export async function searchYoutube(searchQuery: string) {
-  // hello world -> hello+world
-  searchQuery = encodeURIComponent(searchQuery);
-  const { data } = await axios.get(
-    `https://www.googleapis.com/youtube/v3/search?key=${process.env.YOUTUBE_API_KEY}&q=${searchQuery}&videoDuration=medium&videoEmbeddable=true&type=video&maxResults=5&videoCaption=closedCaption`
-  );
-  if (!data) {
-    console.log("YouTube failed");
-    return null;
+async function youtubeApiRequest(url: string, attempt = 1) {
+  try {
+    const { data } = await axios.get(url);
+    return data;
+  } catch (error: any) {
+    if (
+      error.response?.status === 403 &&
+      error.response?.data?.error?.errors[0]?.reason === "quotaExceeded"
+    ) {
+      if (attempt === 1) {
+        console.log(
+          "Primary YouTube API key quota exceeded. Switching to secondary key."
+        );
+        const newUrl = url.replace(
+          process.env.YOUTUBE_API_KEY || "",
+          process.env.YOUTUBE_API_KEY2 || ""
+        );
+        return youtubeApiRequest(newUrl, 2);
+      } else {
+        console.log("Both YouTube API keys have exceeded their quotas.");
+        return null;
+      }
+    } else {
+      console.error("YouTube API error:", error);
+      return null;
+    }
   }
-  if (data.items[0] == undefined) {
-    console.log("YouTube failed");
+}
+
+export async function searchYoutube(searchQuery: string) {
+  searchQuery = encodeURIComponent(searchQuery);
+  const url = `https://www.googleapis.com/youtube/v3/search?key=${process.env.YOUTUBE_API_KEY}&q=${searchQuery}&videoDuration=medium&videoEmbeddable=true&type=video&maxResults=5&videoCaption=closedCaption`;
+  const data = await youtubeApiRequest(url);
+
+  if (!data || !data.items || data.items.length === 0) {
+    console.log("YouTube search failed");
     return null;
   }
   return data.items[0].id.videoId;
 }
 
 export async function getYoutubeDescription(videoId: string) {
-  try {
-    const { data } = await axios.get(
-      `https://www.googleapis.com/youtube/v3/videos?key=${process.env.YOUTUBE_API_KEY}&part=snippet&id=${videoId}`
-    );
-    if (!data || !data.items || data.items.length === 0) {
-      console.log("Failed to retrieve video description");
-      return "No description available";
-    }
-    return data.items[0].snippet.description;
-  } catch (error) {
-    console.log("Error fetching video description:", error);
+  const url = `https://www.googleapis.com/youtube/v3/videos?key=${process.env.YOUTUBE_API_KEY}&part=snippet&id=${videoId}`;
+  const data = await youtubeApiRequest(url);
+
+  if (!data || !data.items || data.items.length === 0) {
+    console.log("Failed to retrieve video description");
     return "No description available";
   }
+  return data.items[0].snippet.description;
 }
 
-// return the full transcript of the video ID
 export async function getTranscript(videoId: string) {
   try {
     let transcript_arr = await YoutubeTranscript.fetchTranscript(videoId, {
