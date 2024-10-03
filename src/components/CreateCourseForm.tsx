@@ -53,6 +53,11 @@ function CreateCourseForm({ isPro, teamId }: Props) {
       });
       return;
     }
+    toast({
+      title: "Pending",
+      description: "Creating course...",
+      variant: "default",
+    });
     createChapters(data, {
       // course_id is from the response of the server from 'api/course/createChapters/route.ts'
       onSuccess: ({ course_id }) => {

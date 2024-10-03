@@ -41,7 +41,6 @@ const TeamsPage = async () => {
           {team?.name ? team.name : "Teams not found"}
         </span>
         <SearchGallery courses={courses} type="team" id={team?.id} />
-        
       </div>
     </div>
   );
