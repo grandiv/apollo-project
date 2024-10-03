@@ -63,7 +63,7 @@ export async function POST(req: Request, res: Response) {
         name: title,
         image: course_image,
         userId: session.user.id,
-        teamId: teamId ? teamId : undefined,
+        teamId: teamId || undefined,
       },
     });
 
@@ -97,19 +97,20 @@ export async function POST(req: Request, res: Response) {
         },
       },
     });
-
-    await prisma.team.update({
-      where: {
-        id: teamId,
-      },
-      data: {
-        courses: {
-          connect: {
-            id: course.id,
+    if (teamId) {
+      await prisma.team.update({
+        where: {
+          id: teamId,
+        },
+        data: {
+          courses: {
+            connect: {
+              id: course.id,
+            },
           },
         },
-      },
-    });
+      });
+    }
 
     // redirect to the course page
     return NextResponse.json({ course_id: course.id });
