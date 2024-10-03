@@ -9,10 +9,10 @@ generator client {
 }
 
 datasource db {
-  provider      = "postgresql"
-  url           = env("DATABASE_URL_DEV")
-  directUrl     = env("DIRECT_URL_DEV")
-  relationMode  = "prisma"
+  provider     = "postgresql"
+  url          = env("DATABASE_URL_DEV")
+  directUrl    = env("DIRECT_URL_DEV")
+  relationMode = "prisma"
 }
 
 model Account {
@@ -44,6 +44,15 @@ model Session {
   @@index([userId], name: "userId")
 }
 
+// team model
+model Team {
+  id      String   @id @default(cuid())
+  name    String
+  referalCode String @unique
+  users   User[] // one to many relationship
+  courses Course[] // one to many relationship
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -51,21 +60,31 @@ model User {
   emailVerified DateTime?
   image         String?
   credits       Int       @default(10)
+  teamId        String?
 
   accounts Account[]
   sessions Session[]
-  courses Course[]
+  // courses  Course[]
+  teams     Team[] 
+  course Course[]
+
+  @@index([teamId])
 }
 
+// join table for many to many relationship between User and Team
 // course contains many units
 model Course {
-  id    String @id @default(cuid())
-  name  String
-  image String
+  id     String  @id @default(cuid())
+  name   String
+  image  String
   userId String
-  units Unit[] // one to many relationship
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamId String?
+  units  Unit[] // one to many relationship
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team   Team?   @relation(fields: [teamId], references: [id])
+
   @@index([userId])
+  @@index([teamId])
 }
 
 // unit contains many chapters
@@ -74,8 +93,9 @@ model Unit {
   courseId String
 
   name     String
-  course   Course    @relation(fields: [courseId], references: [id])
+  // course   Course    @relation(fields: [courseId], references: [id])
   chapters Chapter[]
+  course   Course    @relation(fields: [courseId], references: [id])
 
   @@index([courseId], name: "courseId")
 }

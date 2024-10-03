@@ -17,11 +17,11 @@ import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation"; // navigation is for NextJS app directory, router is for the pages directory
 import SubscriptionAction from "./SubscriptionAction";
 
-type Props = { isPro: boolean };
+type Props = { isPro: boolean, teamId?: string | undefined };
 
 type Input = z.infer<typeof createChaptersSchema>;
 
-function CreateCourseForm({ isPro }: Props) {
+function CreateCourseForm({ isPro, teamId }: Props) {
   const router = useRouter();
   const { toast } = useToast();
   // useMutation is used to send a POST request to the server and manage the state (loading, error, success)
@@ -31,6 +31,7 @@ function CreateCourseForm({ isPro }: Props) {
       const response = await axios.post("/api/course/createChapters", {
         title,
         units,
+        teamId,
       });
       return response.data;
     },
@@ -52,6 +53,11 @@ function CreateCourseForm({ isPro }: Props) {
       });
       return;
     }
+    toast({
+      title: "Pending",
+      description: "Creating course...",
+      variant: "default",
+    });
     createChapters(data, {
       // course_id is from the response of the server from 'api/course/createChapters/route.ts'
       onSuccess: ({ course_id }) => {
