@@ -17,7 +17,7 @@ import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation"; // navigation is for NextJS app directory, router is for the pages directory
 import SubscriptionAction from "./SubscriptionAction";
 
-type Props = { isPro: boolean, teamId?: string | undefined };
+type Props = { isPro: boolean; teamId?: string | undefined };
 
 type Input = z.infer<typeof createChaptersSchema>;
 
@@ -90,7 +90,7 @@ function CreateCourseForm({ isPro, teamId }: Props) {
             render={({ field }) => {
               return (
                 <FormItem className="flex flex-col items-start w-full sm:items-center sm:flex-row">
-                  <FormLabel className="flex-[1] text-xl">Title</FormLabel>
+                  <FormLabel className="flex-[1] text-l">Main Topic</FormLabel>
                   <FormControl className="flex-[6]">
                     <Input
                       placeholder="Enter the main topic of the course"
@@ -122,8 +122,8 @@ function CreateCourseForm({ isPro, teamId }: Props) {
                     render={({ field }) => {
                       return (
                         <FormItem className="flex flex-col items-start w-full sm:items-center sm:flex-row">
-                          <FormLabel className="flex-[1] text-xl">
-                            Unit {index + 1}
+                          <FormLabel className="flex-[1] text-l">
+                            Subtopic {index + 1}
                           </FormLabel>
                           <FormControl className="flex-[6]">
                             <Input

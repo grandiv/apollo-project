@@ -25,12 +25,12 @@ const CreateCourseFromTeams = async (props: Props) => {
       <div className="flex p-4 mt-5 border-none bg-secondary">
         <InfoIcon className="w-12 h-12 mr-3 text-blue-400" />
         <div>
-          Enter in a course title, or what you want to learn about. Then enter a
-          list of units, which are the specifics you want to learn. And our AI
-          will generate a course for you!
+          Enter in a course main topic, or what you want to learn about. Then
+          enter a list of subtopic, which are the specifics you want to learn.
+          And our AI will generate a course for you!
         </div>
       </div>
-      <CreateCourseForm isPro={isPro} teamId={teamId}/>
+      <CreateCourseForm isPro={isPro} teamId={teamId} />
     </div>
   );
 };
